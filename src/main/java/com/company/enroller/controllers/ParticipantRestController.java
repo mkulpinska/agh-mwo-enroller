@@ -14,10 +14,10 @@ import com.company.enroller.persistence.ParticipantService;
 @RequestMapping("/participants")
 public class ParticipantRestController {
 
+//    @Autowired
+//    ParticipantService participantService;
     @Autowired
-    ParticipantService participantService;
-    @Autowired
-    private ParticipantService participant;
+    private ParticipantService participantService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<?> getParticipants() {
@@ -25,7 +25,7 @@ public class ParticipantRestController {
         return new ResponseEntity<Collection<Participant>>(participants, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{login}", method = RequestMethod.GET)
     public ResponseEntity<?> getParticipant(@PathVariable("id") String login) {
         Participant participant = participantService.findByLogin(login);
         if (participant == null) {
@@ -45,7 +45,7 @@ public class ParticipantRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{login}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteParticipant(@PathVariable("id") String login) {
         Participant participant = participantService.findByLogin(login);
         if (participant == null) {
@@ -57,7 +57,7 @@ public class ParticipantRestController {
 
 
     @RequestMapping(value = "/{login}", method = RequestMethod.PUT)
-    public ResponseEntity<?> getParticipant(@PathVariable("login") String login, @RequestBody Participant participant) {
+    public ResponseEntity<?> updateParticipant(@PathVariable("login") String login, @RequestBody Participant participant) {
         Participant foundParticipant = participantService.findByLogin(login);
         if (foundParticipant == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
